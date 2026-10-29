@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { MathExpression } from '../math/MathExpression';
 import { useAIStore } from '../../stores/aiStore';
 import type { MathStep } from '../../types/math';
@@ -9,7 +9,8 @@ import {
   useStepScrollSpy,
   type StepNavTarget,
 } from '../../hooks/useStepScrollSpy';
-import type { RefObject } from 'react';
+import { useCompactChrome } from '../../hooks/useLandscapeBoard';
+import { useEffect, useState, type RefObject } from 'react';
 
 interface StepReferenceNavigatorProps {
   steps: MathStep[];
@@ -50,6 +51,12 @@ export function StepReferenceNavigator({
 }: StepReferenceNavigatorProps) {
   const setNarrationFocus = useAIStore((state) => state.setNarrationFocus);
   const narrationFocus = useAIStore((state) => state.narrationFocus);
+  const compact = useCompactChrome();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [lessonKey, compact]);
 
   const visibleTarget = useStepScrollSpy({
     scrollRef,
@@ -67,23 +74,39 @@ export function StepReferenceNavigator({
     } else {
       setNarrationFocus({ kind: 'step', step: target });
     }
+    if (compact) setOpen(false);
   };
 
   if (steps.length === 0) return null;
 
-  return (
+  const nav = (
     <nav
       className={clsx(
-        'hidden min-h-0 w-[min(100%,13.5rem)] shrink-0 flex-col border-l border-slate-200 bg-white/95 backdrop-blur md:flex lg:w-56 xl:w-60',
+        'flex min-h-0 shrink-0 flex-col border-l border-slate-200 bg-white/95 backdrop-blur',
+        compact
+          ? 'absolute inset-y-0 right-0 z-30 w-[min(92%,17rem)] shadow-[-12px_0_30px_rgba(15,23,42,0.16)]'
+          : 'w-[min(100%,13.5rem)] lg:w-56 xl:w-60',
         className
       )}
       aria-label="Step references"
     >
-      <div className="shrink-0 border-b border-slate-100 px-3 py-3">
-        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-          Steps
-        </p>
-        <p className="mt-0.5 text-xs text-slate-500">Jump to any part</p>
+      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-slate-100 px-3 py-3">
+        <div className="min-w-0">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+            Steps
+          </p>
+          <p className="mt-0.5 text-xs text-slate-500">Jump to any part</p>
+        </div>
+        {compact && (
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            aria-label="Hide steps"
+          >
+            <ChevronRight size={20} aria-hidden="true" />
+          </button>
+        )}
       </div>
 
       <ol className="step-nav-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain py-2">
@@ -189,5 +212,34 @@ export function StepReferenceNavigator({
         </li>
       </ol>
     </nav>
+  );
+
+  if (!compact) return nav;
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="absolute right-0 top-1/2 z-30 flex h-11 -translate-y-1/2 items-center gap-1 rounded-l-full border border-r-0 border-slate-200 bg-white pl-2.5 pr-2 text-sm font-semibold text-slate-800 shadow-md transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        aria-expanded={false}
+        aria-label="Show steps"
+      >
+        <ChevronLeft size={16} aria-hidden="true" />
+        Steps
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className="absolute inset-0 z-20 bg-slate-900/20"
+        aria-label="Hide steps"
+        onClick={() => setOpen(false)}
+      />
+      {nav}
+    </>
   );
 }

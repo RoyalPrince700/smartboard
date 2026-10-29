@@ -1,14 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { ArrowLeft, Bot, ChevronUp, PenLine, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import clsx from 'clsx';
 import { useAIStore } from '../../stores/aiStore';
+import { useCompactChrome } from '../../hooks/useLandscapeBoard';
 import { TutorAction, TutorActionId } from '../tutor/TutorActionBar';
 import { TutorError, TutorLoading } from '../tutor/TutorState';
 import { DiagramAnalysisPanel } from '../ai/DiagramAnalysisPanel';
 import { MathSolutionPanel } from '../ai/MathSolutionPanel';
 import { SubjectResponseView } from '../ai/SubjectResponseView';
 import { StepReferenceNavigator } from '../tutor/StepReferenceNavigator';
-import { formatSolvedArithmeticDisplay } from '../../utils/voiceMathParser';
+import { formatLessonQuestion } from '../../utils/lessonQuestion';
 
 interface BoardLessonOverlayProps {
   onTutorAction: (id: TutorActionId) => void;
@@ -35,6 +37,7 @@ export function BoardLessonOverlay({ onTutorAction }: BoardLessonOverlayProps) {
   const narrationFocus = useAIStore((state) => state.narrationFocus);
   const setBoardLessonOpen = useAIStore((state) => state.setBoardLessonOpen);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const compact = useCompactChrome();
 
   const hasContent = Boolean(solution || response || agentResponse || diagramAnalysis);
   const showThinking = loading || (!hasContent && !error);
@@ -45,20 +48,12 @@ export function BoardLessonOverlay({ onTutorAction }: BoardLessonOverlayProps) {
     }
   }, [narrationFocus]);
 
-  const questionFallback =
-    agentProblemEquation ||
-    history[0]?.rawInput ||
-    inputText.trim() ||
-    'Let’s explore this together';
-  const question =
-    solution?.problemType === 'arithmetic' && solution.answer
-      ? formatSolvedArithmeticDisplay(
-          solution.recognizedInput || solution.equation || questionFallback,
-          solution.answer
-        )
-      : solution?.recognizedInput ||
-        solution?.equation ||
-        questionFallback;
+  const question = formatLessonQuestion({
+    solution,
+    agentProblemEquation,
+    historyRawInput: history[0]?.rawInput,
+    inputText,
+  });
 
   const agentFollowUpActions: TutorAction[] = [
     { id: 'explain-more', label: 'Explain More' },
@@ -107,16 +102,24 @@ export function BoardLessonOverlay({ onTutorAction }: BoardLessonOverlayProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: focusMode ? 0 : 12 }}
           transition={{ duration: focusMode ? 0.18 : 0.28, ease: 'easeOut' }}
-          className={`absolute inset-0 z-40 flex flex-col overflow-hidden ${
+          className={clsx(
+            'absolute inset-0 z-40 flex flex-col overflow-hidden',
             focusMode
-              ? 'bg-white pt-[max(3rem,env(safe-area-inset-top))]'
-              : `rounded-xl bg-[#f8fafc] landscape-board:rounded-none ${
-                  boardTopCollapsed ? 'pt-12 landscape-board:pt-10' : 'pt-[76px] landscape-board:pt-[52px]'
-                }`
-          }`}
+              ? compact
+                ? 'bg-white pt-[max(4.5rem,calc(env(safe-area-inset-top)+3.75rem))]'
+                : 'bg-white pt-[max(3rem,env(safe-area-inset-top))]'
+              : clsx(
+                  'rounded-xl bg-[#f8fafc] landscape-board:rounded-none',
+                  compact
+                    ? 'pt-[max(4.75rem,calc(env(safe-area-inset-top)+4rem))]'
+                    : boardTopCollapsed
+                      ? 'pt-16'
+                      : 'pt-28'
+                )
+          )}
           aria-label="Tutor lesson on whiteboard"
         >
-          {!focusMode && !boardTopCollapsed && (
+          {!focusMode && !boardTopCollapsed && !compact && (
           <header
             data-step-nav="question"
             className={`sticky top-0 z-10 shrink-0 border-b bg-white/95 px-4 py-3 shadow-sm backdrop-blur transition sm:px-6 ${
@@ -166,7 +169,7 @@ export function BoardLessonOverlay({ onTutorAction }: BoardLessonOverlayProps) {
           </header>
           )}
 
-          {focusMode && (
+          {focusMode && !compact && (
             <p
               data-step-nav="question"
               className="shrink-0 px-6 pb-2 text-center text-sm font-medium text-slate-400 sm:text-base"
@@ -175,7 +178,7 @@ export function BoardLessonOverlay({ onTutorAction }: BoardLessonOverlayProps) {
             </p>
           )}
 
-          <div className="flex min-h-0 flex-1">
+          <div className="relative flex min-h-0 flex-1">
             <div
               ref={scrollRef}
               className={`board-lesson-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain ${

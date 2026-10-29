@@ -24,6 +24,33 @@ export async function lockLandscape(): Promise<void> {
   }
 }
 
+/** Phone landscape, or any viewport narrower than the desktop lesson layout. */
+export const COMPACT_CHROME_QUERY =
+  '(max-width: 1023px), (orientation: landscape) and (max-height: 540px)';
+
+export function useCompactChrome(): boolean {
+  const [compact, setCompact] = useState(() => matches(COMPACT_CHROME_QUERY));
+
+  useEffect(() => {
+    const media = window.matchMedia(COMPACT_CHROME_QUERY);
+
+    const sync = () => setCompact(media.matches);
+
+    media.addEventListener('change', sync);
+    window.addEventListener('resize', sync);
+    window.addEventListener('orientationchange', sync);
+    sync();
+
+    return () => {
+      media.removeEventListener('change', sync);
+      window.removeEventListener('resize', sync);
+      window.removeEventListener('orientationchange', sync);
+    };
+  }, []);
+
+  return compact;
+}
+
 export function useLandscapeBoard() {
   const [needsRotate, setNeedsRotate] = useState(() => matches(PORTRAIT_PHONE_QUERY));
   const [isCompactLandscape, setIsCompactLandscape] = useState(() =>
