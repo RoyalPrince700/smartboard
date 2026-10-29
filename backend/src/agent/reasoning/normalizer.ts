@@ -60,7 +60,11 @@ export function normalizeReasoningInput(raw: string): NormalizedInput {
   const isAbsoluteValue = /\|[^|]+\|/.test(normalized);
   const isExponential =
     /(?:\d+|e)\^[^=]*[a-zA-Z]/i.test(normalized.replace(/\s/g, '')) && normalized.includes('=');
-  const isArithmetic = isEquation && !/[a-zA-Z]/.test(normalized) && /[+\-*/^]/.test(normalized);
+  const arithmeticCompact = normalized.replace(/\s/g, '');
+  const isArithmetic =
+    !/[a-zA-Z]/.test(arithmeticCompact) &&
+    /\d/.test(arithmeticCompact) &&
+    /[+\-*/^]/.test(arithmeticCompact.replace(/(^|[+\-*/^(])-/g, '$1'));
   const isLinear =
     /[a-zA-Z]/.test(normalized) &&
     !isQuadratic &&

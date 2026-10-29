@@ -7,6 +7,7 @@ import { SolveResponse } from '../../types/math';
 import { useAIStore } from '../../stores/aiStore';
 import { splitStepContent } from '../../utils/mathPresentation';
 import { GeometryRecognitionDebug } from '../geometry/GeometryRecognitionDebug';
+import { ObjectArithmeticScene } from '../math/ObjectArithmeticScene';
 
 interface MathSolutionPanelProps {
   solution: SolveResponse;
@@ -116,6 +117,12 @@ export function MathSolutionPanel({
           We&apos;ll take it one clear step at a time.
         </p>
       </header>
+      )}
+
+      {solution.problemType === 'arithmetic' && (
+        <ObjectArithmeticScene
+          expression={solution.recognizedInput || solution.equation || ''}
+        />
       )}
 
       {showProblem && (solution.equation || solution.recognizedInput) && (

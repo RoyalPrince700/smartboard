@@ -201,7 +201,7 @@ export function BoardLessonOverlay({ onTutorAction }: BoardLessonOverlayProps) {
                 {!showThinking && agentResponse && !solution && !diagramAnalysis && (
                   <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-relaxed text-amber-900">
                     The tutor understood your request but could not build a step-by-step solution yet.
-                    Try entering a quadratic such as <strong>2x^2 + 5x - 3 = 0</strong>, or draw a triangle and label the sides.
+                    Try entering a quadratic such as <strong>2x^2 + 5x - 3 = 0</strong>, or write an equation on the board.
                   </div>
                 )}
 

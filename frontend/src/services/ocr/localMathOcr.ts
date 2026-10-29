@@ -120,7 +120,11 @@ function ocrStatusFromClassification(
   const classification = classifyEquationInput(text);
   const hasTopic = Boolean(classification.topic);
   const threshold = hasTopic ? 0.72 : 0.75;
-  return classification.isEquation && confidence >= threshold ? 'ok' : 'low_confidence';
+  const solvable =
+    classification.isEquation ||
+    classification.topic === 'arithmetic' ||
+    classification.topic === 'probability';
+  return solvable && confidence >= threshold ? 'ok' : 'low_confidence';
 }
 
 function confidenceFromLabel(text: string): number {

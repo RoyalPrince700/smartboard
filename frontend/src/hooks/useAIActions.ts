@@ -47,6 +47,7 @@ import {
 import { captureBoardGeometry, captureBoardGeometryAsync, buildGeometryProblemText, buildTrigonometryProblemText, isTrigonometryDiagram, isGeneratedBoardPrompt } from '../utils/boardGeometryCapture';
 import { isGeometryDebugEnabled } from '../engine/geometry/geometryRecognitionService';
 import { identifyBoardContent } from '../utils/boardContentIdentifier';
+import { GEOMETRY_RECOGNITION_ENABLED } from '../config/geometryRecognition';
 import { generateDiagramFromScene } from '../engine/diagram/sceneDiagram';
 import { generateCanonicalGeometryDiagramFromText } from '../engine/diagram/canonicalGeometry';
 import {
@@ -439,6 +440,20 @@ export function useAIActions() {
 
   const sendAgentTurn = useCallback(
     async (message: string, options?: { forceNewSession?: boolean }) => {
+      const trimmedMessage = sanitizeEquationInput(message);
+      if (
+        !GEOMETRY_RECOGNITION_ENABLED &&
+        !isClearEquationInput(trimmedMessage) &&
+        (isGeneratedBoardPrompt(trimmedMessage) || looksLikeGeometry(trimmedMessage))
+      ) {
+        setError(
+          'Shape and triangle recognition is paused. Write or type an arithmetic problem or equation.'
+        );
+        setPanelOpen(true);
+        setLoading(false);
+        return;
+      }
+
       clearError();
       setLoading(true);
       setPanelOpen(true);
@@ -455,9 +470,10 @@ export function useAIActions() {
       const isTrigonometryInput = looksLikeTrigonometry(trimmed);
       const isGeometryInput = looksLikeGeometry(trimmed) && !isTrigonometryInput;
       const isProbabilityInput = looksLikeProbability(trimmed);
+      const isArithmeticInput = classifyEquationInput(trimmed).topic === 'arithmetic';
       const isEquationInput =
         looksLikeMath(trimmed) &&
-        (/=/.test(trimmed) || isProbabilityInput) &&
+        (/=/.test(trimmed) || isProbabilityInput || isArithmeticInput) &&
         !isGeometryInput &&
         !isTrigonometryInput;
       const priorState = useAIStore.getState();
@@ -613,7 +629,7 @@ export function useAIActions() {
       let equation = preferBoardHandwriting ? boardText : typed || boardText;
 
       if (!equation && !hasBoard) {
-        setError('Enter an equation, draw a shape, or write one on the board.');
+        setError('Enter an equation or write one on the board.');
         setPanelOpen(true);
         setLoading(false);
         return;
@@ -621,10 +637,67 @@ export function useAIActions() {
 
       beginTutorSession();
 
-      // Local agent: identify board content (equation vs geometry) then apply the right rules
+      // Local agent. Shape, triangle, and diagram recognition is suspended
+      // (GEOMETRY_RECOGNITION_ENABLED). Handwriting is read as arithmetic or an equation.
       if (agentEnabled && isAgentFeatureEnabled()) {
         const hasPen = hasPenHandwriting(recognizable);
         const typedIsClearEquation = Boolean(typed && isClearEquationInput(typed));
+
+        if (!GEOMETRY_RECOGNITION_ENABLED) {
+          const typedIsGeometryPrompt =
+            Boolean(typed) &&
+            !typedIsClearEquation &&
+            (isGeneratedBoardPrompt(typed) || looksLikeGeometry(typed));
+          let resolved = typedIsGeometryPrompt ? '' : typed;
+          const shouldReadHandwriting = hasPen && (preferBoardHandwriting || !resolved);
+
+          if (shouldReadHandwriting) {
+            try {
+              const ocr = await recognizeMathFromStrokes(recognizable);
+              if (ocr.text && ocr.status === 'ok') {
+                resolved = ocr.text;
+                setRecognizedText(ocr.text);
+                setInputText(ocr.text);
+              } else if (preferBoardHandwriting || !resolved) {
+                if (ocr.text) {
+                  setRecognizedText(ocr.text);
+                  setInputText(ocr.text);
+                  setError(
+                    `I read "${ocr.text}", but I am not confident enough to solve it automatically. Please check the equation in the tutor bar and send it again.`
+                  );
+                } else {
+                  setError(
+                    ocr.message ??
+                      'I could not recognize handwriting locally. Please write a single clear equation or type it in the tutor bar.'
+                  );
+                }
+                setLoading(false);
+                return;
+              }
+            } catch (err) {
+              if (preferBoardHandwriting || !resolved) {
+                setError(err instanceof Error ? err.message : 'Local handwriting recognition failed');
+                setLoading(false);
+                return;
+              }
+            }
+          }
+
+          if (!resolved && typedIsGeometryPrompt) {
+            setError(
+              'Shape and triangle recognition is paused. Write or type an arithmetic problem or equation.'
+            );
+            setPanelOpen(true);
+            setLoading(false);
+            return;
+          }
+
+          equation = resolved || (preferBoardHandwriting ? boardText : typed || boardText);
+          if (equation && (shouldRouteToAgent(equation, true) || looksLikeMath(equation))) {
+            return sendAgentTurn(equation);
+          }
+        } else {
+        // Geometry / trigonometry diagram capture. Suspended while GEOMETRY_RECOGNITION_ENABLED is false.
         const needsDiagramCapture =
           looksLikeGeometry(typed) ||
           looksLikeTrigonometry(typed) ||
@@ -803,6 +876,7 @@ export function useAIActions() {
         }
         if (shouldRouteToAgent(equation, true) || looksLikeMath(equation) || looksLikeGeometry(equation)) {
           return sendAgentTurn(equation);
+        }
         }
       }
 

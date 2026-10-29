@@ -8,6 +8,7 @@ import { useBoardPersistence } from '../hooks/useBoardPersistence';
 import { useAIStore } from '../stores/aiStore';
 import { useBoardStore } from '../stores/boardStore';
 import { loadOpenCV } from '../engine/geometry/opencv/opencvLoader';
+import { GEOMETRY_RECOGNITION_ENABLED } from '../config/geometryRecognition';
 
 export function BoardPage() {
   const { id } = useParams<{ id: string }>();
@@ -42,6 +43,8 @@ export function BoardPage() {
   }, [loadAIStatus]);
 
   useEffect(() => {
+    // OpenCV is only used for shape recognition. Leave it unloaded while that path is suspended.
+    if (!GEOMETRY_RECOGNITION_ENABLED) return;
     void loadOpenCV();
   }, []);
 

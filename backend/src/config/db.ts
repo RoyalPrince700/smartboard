@@ -8,7 +8,9 @@ export async function connectDB(): Promise<void> {
 
   try {
     await mongoose.connect(env.mongodbUri, {
-      serverSelectionTimeoutMS: 5000,
+      // Atlas from this network often needs more than 5s to finish the handshake.
+      serverSelectionTimeoutMS: 20000,
+      connectTimeoutMS: 20000,
     });
     isConnected = true;
     console.log('MongoDB connected');

@@ -46,6 +46,24 @@ function inferDegree(normalized: string): number | undefined {
   return /[a-zA-Z]/.test(normalized) ? 1 : undefined;
 }
 
+/**
+ * Ordinary arithmetic such as 3+4, 12-5, or (2+5)*3.
+ * A trailing equals is optional. Variable equations are not included.
+ */
+export function isPlainArithmeticExpression(input: string): boolean {
+  const compact = normalizeEquationText(input).replace(/=+$/, '');
+  if (!compact || compact.includes('=')) return false;
+  if (/[a-zA-Z]/.test(compact)) return false;
+  if (!/^[\d+\-*/^().]+$/.test(compact)) return false;
+  if ((compact.match(/\(/g) ?? []).length !== (compact.match(/\)/g) ?? []).length) return false;
+  if (/[+\-*/^]$/.test(compact) || /^[+*/^]/.test(compact)) return false;
+  if (!/\d/.test(compact)) return false;
+
+  const withoutUnaryMinus = compact.replace(/(^|[+\-*/^(])-/g, '$1');
+  if (/[+\-*/^]{2,}/.test(withoutUnaryMinus)) return false;
+  return /[+\-*/^]/.test(withoutUnaryMinus);
+}
+
 const TRIG_PATTERN =
   /\b(?:sin|sine|cos|cosine|tan|tangent)\b|(?:^|[^a-zA-Z])(?:sin|cos|tan)(?=\d|\()/i;
 
@@ -119,12 +137,15 @@ export function classifyEquationInput(input: string): EquationClassification {
   const degree = hasVariable ? inferDegree(normalized) : undefined;
 
   if (!isEquation || !hasVariable) {
-    const isArithmetic = isEquation && hasMathOperator && !hasVariable;
+    const isArithmetic =
+      !hasVariable &&
+      !/\|/.test(normalized) &&
+      (isPlainArithmeticExpression(normalized) || (isEquation && hasMathOperator));
     return {
       isEquation,
-      isMath: hasMathOperator || hasVariable,
+      isMath: hasMathOperator || hasVariable || isArithmetic,
       topic: isArithmetic ? 'arithmetic' : undefined,
-      confidence: isArithmetic ? 0.88 : isEquation || hasMathOperator ? 0.35 : 0,
+      confidence: isArithmetic ? 0.9 : isEquation || hasMathOperator ? 0.35 : 0,
     };
   }
 
@@ -144,6 +165,7 @@ export function isClearEquationInput(input: string): boolean {
   const trimmed = input.trim();
   if (!trimmed) return false;
   if (looksLikeProbability(trimmed)) return true;
+  if (isPlainArithmeticExpression(trimmed)) return true;
   if (!/=/.test(trimmed)) return false;
   if (
     /\[geometry\]|\btriangle\b|\brectangle\b|\bsquare\b|\bcircle\b|\bhypotenuse\b|\bpythagoras\b|\bperimeter\b|\bcircumference\b|\bradius\b|\barea of\b/i.test(

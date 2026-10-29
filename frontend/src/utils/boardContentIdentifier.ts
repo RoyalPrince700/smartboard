@@ -35,7 +35,9 @@ function isRecognizedMathEquation(classification: EquationClassification): boole
   return (
     classification.isMath &&
     Boolean(classification.topic) &&
-    (classification.isEquation || classification.topic === 'probability')
+    (classification.isEquation ||
+      classification.topic === 'probability' ||
+      classification.topic === 'arithmetic')
   );
 }
 
