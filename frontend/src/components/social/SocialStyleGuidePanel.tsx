@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Check, ChevronDown, Copy } from 'lucide-react';
-import { CONTENT_ANGLES, CONTENT_GOALS, PRIMARY_OBJECTIVES } from '../../data/social/contentPlaybook';
+import { CONTENT_ANGLES, PRIMARY_OBJECTIVES } from '../../data/social/contentPlaybook';
 import {
   RAW_VOICE_SAMPLES,
   SOCIAL_GENERATION_INSTRUCTIONS,

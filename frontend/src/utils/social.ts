@@ -30,11 +30,10 @@ export function buildThreadCopyText(post: PlatformPost): string {
   return post.thread.map((tweet, i) => `${i + 1}/${post.thread!.length}\n${tweet}`).join('\n\n---\n\n');
 }
 
-/** Single series part with optional part label */
+/** Single series part with optional hashtags */
 export function buildSeriesPartText(post: PlatformPost, index: number): string {
   const part = post.series?.[index];
   if (!part) return '';
-  const label = `Part ${index + 1}/${post.series!.length}`;
   const tags = formatHashtags(post.hashtags);
   return tags ? `${part}\n\n${tags}` : part;
 }

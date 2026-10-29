@@ -130,17 +130,19 @@ export function PlatformPostPanel({ platform, post }: PlatformPostPanelProps) {
           </div>
         )}
 
-        <div>
-          <div className="mb-1.5 flex items-center justify-between gap-2">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
-              Main content
+        {post.content && (
+          <div>
+            <div className="mb-1.5 flex items-center justify-between gap-2">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+                Main content
+              </p>
+              <CopyBtn text={copyText} label="Copy" id="content" />
+            </div>
+            <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-neutral-800">
+              {post.content}
             </p>
-            <CopyBtn text={copyText} label="Copy" id="content" />
           </div>
-          <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-neutral-800">
-            {post.content}
-          </p>
-        </div>
+        )}
 
         {post.series && post.series.length > 0 && (
           <div className="rounded-xl border border-blue-200 bg-blue-50/40 px-4 py-4">

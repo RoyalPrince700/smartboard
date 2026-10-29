@@ -5,10 +5,12 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "build:test": "tsc",
+    "postinstall": "node -e \"if (process.env.RENDER) require('child_process').execSync('npm run build', {stdio:'inherit'})\"",
     "start": "node dist/server.js",
     "seed:agent": "npx ts-node --transpile-only src/agent/scripts/seedAgentKnowledge.ts",
-    "test:agent": "npm run build && node --test dist/agent/knowledge/knowledgeRanker.test.js dist/agent/knowledge/knowledgeQueryBuilder.test.js dist/agent/knowledge/knowledgeValidator.test.js dist/agent/knowledge/knowledgePackage.test.js dist/agent/conversation/contextManager.test.js dist/agent/conversation/stateManager.test.js dist/agent/conversation/conversationMemory.test.js dist/agent/intent/intentEngine.test.js dist/agent/reasoning/reasoning.test.js dist/agent/reasoning/reasoning.integration.test.js dist/agent/subjects/math/quadratic/tests/quadraticSolvers.test.js dist/agent/subjects/math/linear/tests/linearSolvers.test.js dist/agent/subjects/math/arithmetic/tests/arithmeticSolvers.test.js dist/agent/subjects/math/geometry/tests/geometrySolvers.test.js dist/agent/subjects/math/trigonometry/tests/trigonometrySolvers.test.js dist/services/geometry/GeometryRecognizer.test.js dist/agent/teaching/teachingEngine.test.js dist/agent/response/placeholderResolver.test.js dist/agent/response/responseValidator.test.js dist/agent/response/responseBuilder.test.js dist/agent/tests/agentConversation.e2e.test.js"
+    "test:agent": "npm run build:test && node --test dist/agent/knowledge/knowledgeRanker.test.js dist/agent/knowledge/knowledgeQueryBuilder.test.js dist/agent/knowledge/knowledgeValidator.test.js dist/agent/knowledge/knowledgePackage.test.js dist/agent/conversation/contextManager.test.js dist/agent/conversation/stateManager.test.js dist/agent/conversation/conversationMemory.test.js dist/agent/intent/intentEngine.test.js dist/agent/reasoning/reasoning.test.js dist/agent/reasoning/reasoning.integration.test.js dist/agent/subjects/math/quadratic/tests/quadraticSolvers.test.js dist/agent/subjects/math/linear/tests/linearSolvers.test.js dist/agent/subjects/math/arithmetic/tests/arithmeticSolvers.test.js dist/agent/subjects/math/geometry/tests/geometrySolvers.test.js dist/agent/subjects/math/trigonometry/tests/trigonometrySolvers.test.js dist/services/geometry/GeometryRecognizer.test.js dist/agent/teaching/teachingEngine.test.js dist/agent/response/placeholderResolver.test.js dist/agent/response/responseValidator.test.js dist/agent/response/responseBuilder.test.js dist/agent/tests/agentConversation.e2e.test.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

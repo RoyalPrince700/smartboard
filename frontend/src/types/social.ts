@@ -18,7 +18,8 @@ export interface SocialMediaAttachment {
 }
 
 export interface PlatformPost {
-  content: string;
+  /** Single-post copy. LinkedIn/WhatsApp series and Twitter threads can omit this. */
+  content?: string;
   /** Optional short opener — useful for TikTok / Reels */
   hook?: string;
   /** Platform-specific hashtags (without #) */

@@ -290,20 +290,20 @@ export function labelRecognitionsFromStrokes(
   strokes: Stroke[],
   ocrTexts: Array<{ strokeId: string; text: string; confidence: number; source?: 'ocr' | 'digit-guess' }>
 ): LabelStrokeRecognition[] {
-  return strokes
-    .map((stroke) => {
-      const centroid = centroidOf(stroke);
-      const ocr = ocrTexts.find((item) => item.strokeId === stroke.id);
-      if (!centroid || !ocr?.text.trim()) return null;
-      return {
-        strokeId: stroke.id,
-        text: ocr.text.trim(),
-        confidence: ocr.confidence,
-        centroid,
-        source: ocr.source ?? (ocr.confidence < 0.55 ? 'digit-guess' : 'ocr'),
-      };
-    })
-    .filter((item): item is LabelStrokeRecognition => Boolean(item));
+  const results: LabelStrokeRecognition[] = [];
+  for (const stroke of strokes) {
+    const centroid = centroidOf(stroke);
+    const ocr = ocrTexts.find((item) => item.strokeId === stroke.id);
+    if (!centroid || !ocr?.text.trim()) continue;
+    results.push({
+      strokeId: stroke.id,
+      text: ocr.text.trim(),
+      confidence: ocr.confidence,
+      centroid,
+      source: ocr.source ?? (ocr.confidence < 0.55 ? 'digit-guess' : 'ocr'),
+    });
+  }
+  return results;
 }
 
 export function parseBatchLabelText(text: string, strokeCount: number): string[] {

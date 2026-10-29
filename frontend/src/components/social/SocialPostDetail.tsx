@@ -73,7 +73,10 @@ export function SocialPostDetail({ post }: SocialPostDetailProps) {
                 <span className="text-[13px] font-medium text-neutral-700">{platform.label}</span>
               </div>
               <p className="line-clamp-2 text-[12px] leading-relaxed text-neutral-500">
-                {post.platforms[platform.id].hook ?? post.platforms[platform.id].content}
+                {post.platforms[platform.id].hook
+                  ?? post.platforms[platform.id].content
+                  ?? post.platforms[platform.id].series?.[0]
+                  ?? post.platforms[platform.id].thread?.[0]}
               </p>
               <p className="mt-1 text-[11px] text-neutral-400">
                 {post.platforms[platform.id].series?.length

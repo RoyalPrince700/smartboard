@@ -128,7 +128,7 @@ function scoreTrigonometrySignals(
 }
 
 function buildEquationReason(
-  typed: string,
+  _typed: string,
   ocr: LocalMathOcrResult | null | undefined,
   typedClass: EquationClassification | null,
   ocrClass: EquationClassification | null

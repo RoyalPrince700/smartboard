@@ -111,7 +111,7 @@ export function normalizeSpokenMath(text: string): string {
 
   normalized = rewriteSpokenMathPhrases(normalized);
   normalized = normalized.replace(/\b(?:comma|coma|semicolon)\b/g, ' , ');
-  normalized = normalized.replace(/\s+and\s+/gi, (match, offset, full: string) =>
+  normalized = normalized.replace(/\s+and\s+/gi, (_match, offset, full: string) =>
     /[<>=]/.test(full.slice(0, offset)) ? ' , ' : ' + '
   );
 

@@ -128,7 +128,7 @@ export function createEmptySession(
   sessionId: string,
   userId?: string,
   boardId?: string
-): Partial<TutorSessionData> {
+): TutorSessionData {
   return {
     sessionId,
     userId,
@@ -140,5 +140,5 @@ export function createEmptySession(
     conversationHistory: [],
     metadata: {},
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  };
+  } as TutorSessionData;
 }

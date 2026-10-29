@@ -329,16 +329,16 @@ export async function recognizeGeometryLabelsPerStroke(
 }
 
 function recoverDigitsWithoutOcr(strokes: BoardStroke[]): PerStrokeLabelResult[] {
-  return strokes
-    .map((stroke) => {
-      const recovered = labelFromOcrOrStroke('', strokePoints(stroke));
-      if (!recovered) return null;
-      return {
-        strokeId: stroke.id,
-        text: recovered.text,
-        confidence: recovered.confidence,
-        source: recovered.source,
-      };
-    })
-    .filter((item): item is PerStrokeLabelResult => Boolean(item));
+  const results: PerStrokeLabelResult[] = [];
+  for (const stroke of strokes) {
+    const recovered = labelFromOcrOrStroke('', strokePoints(stroke));
+    if (!recovered) continue;
+    results.push({
+      strokeId: stroke.id,
+      text: recovered.text,
+      confidence: recovered.confidence,
+      source: recovered.source,
+    });
+  }
+  return results;
 }
