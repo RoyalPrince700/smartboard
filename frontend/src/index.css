@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+@supports (height: 100dvh) {
+  html,
+  body,
+  #root {
+    height: 100dvh;
+  }
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+@keyframes board-phone-tilt {
+  0%,
+  18% {
+    transform: rotate(0deg);
+  }
+  45%,
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+.board-phone-tilt {
+  animation: board-phone-tilt 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .pen-size-slider {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    width: 1.15rem;
+    height: 4.25rem;
+    padding: 0;
+  }
+}
+
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+.touch-none {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.board-lesson-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.board-lesson-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.board-lesson-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.board-lesson-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border: 3px solid #f8fafc;
+  border-radius: 999px;
+}
+
+.step-nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #e2e8f0 transparent;
+}
+
+.step-nav-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.step-nav-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.step-nav-scroll::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 999px;
+}

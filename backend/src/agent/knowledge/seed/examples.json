@@ -1,0 +1,244 @@
+[
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "exampleId": "quad_formula_2x2_5x_3",
+    "title": "Quadratic formula: 2x² + 5x − 3 = 0",
+    "question": "Solve 2x² + 5x − 3 = 0",
+    "classification": {
+      "problemType": "quadratic",
+      "coefficients": { "a": 2, "b": 5, "c": -3 }
+    },
+    "method": "quadratic_formula",
+    "reasoningSteps": [
+      {
+        "step": 1,
+        "title": "Identify coefficients",
+        "description": "a = 2, b = 5, c = −3",
+        "conceptRefs": ["standard_form", "coefficients"]
+      },
+      {
+        "step": 2,
+        "title": "Calculate discriminant",
+        "description": "Δ = b² − 4ac = 25 + 24 = 49",
+        "calculations": ["5^2 - 4(2)(-3) = 49"]
+      },
+      {
+        "step": 3,
+        "title": "Apply quadratic formula",
+        "description": "x = (−5 ± √49) / 4 = (−5 ± 7) / 4",
+        "calculations": ["x = 0.5", "x = -3"]
+      }
+    ],
+    "answer": { "roots": [0.5, -3], "display": "x = 0.5 or x = −3" },
+    "verification": {
+      "method": "substitution",
+      "checks": ["2(0.5)² + 5(0.5) − 3 = 0", "2(−3)² + 5(−3) − 3 = 0"]
+    },
+    "teachingNotes": ["Emphasize that Δ > 0 means two distinct real roots"],
+    "commonMistakes": ["Sign error when computing −4ac with negative c"],
+    "difficulty": "intermediate",
+    "tags": ["quadratic_formula"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "exampleId": "quad_factor_x2_5x_6",
+    "title": "Factorizing x² + 5x + 6 = 0",
+    "question": "Solve x² + 5x + 6 = 0",
+    "classification": {
+      "problemType": "quadratic",
+      "coefficients": { "a": 1, "b": 5, "c": 6 }
+    },
+    "method": "factorization",
+    "reasoningSteps": [
+      {
+        "step": 1,
+        "title": "Identify coefficients",
+        "description": "a = 1, b = 5, c = 6",
+        "conceptRefs": ["standard_form"]
+      },
+      {
+        "step": 2,
+        "title": "Find factors",
+        "description": "Find two numbers that multiply to 6 and add to 5",
+        "calculations": ["2 × 3 = 6", "2 + 3 = 5"]
+      },
+      {
+        "step": 3,
+        "title": "Write factors",
+        "description": "(x + 2)(x + 3) = 0",
+        "calculations": ["x + 2 = 0 → x = −2", "x + 3 = 0 → x = −3"]
+      }
+    ],
+    "answer": { "roots": [-2, -3], "display": "x = −2 or x = −3" },
+    "verification": {
+      "method": "substitution",
+      "checks": ["(−2)² + 5(−2) + 6 = 0", "(−3)² + 5(−3) + 6 = 0"]
+    },
+    "teachingNotes": ["Emphasize factor pair search"],
+    "commonMistakes": ["Sign errors when finding factor pairs"],
+    "difficulty": "beginner",
+    "tags": ["factorization"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "exampleId": "quad_repeated_root",
+    "title": "Repeated root: x² − 4x + 4 = 0",
+    "question": "Solve x² − 4x + 4 = 0",
+    "classification": {
+      "problemType": "quadratic",
+      "coefficients": { "a": 1, "b": -4, "c": 4 }
+    },
+    "method": "factorization",
+    "reasoningSteps": [
+      {
+        "step": 1,
+        "title": "Identify coefficients",
+        "description": "a = 1, b = −4, c = 4",
+        "conceptRefs": ["standard_form"]
+      },
+      {
+        "step": 2,
+        "title": "Calculate discriminant",
+        "description": "Δ = (−4)² − 4(1)(4) = 0",
+        "calculations": ["16 - 16 = 0"]
+      },
+      {
+        "step": 3,
+        "title": "Factor perfect square",
+        "description": "(x − 2)² = 0 → x = 2 (repeated root)",
+        "calculations": ["x = 2"]
+      }
+    ],
+    "answer": { "roots": [2], "display": "x = 2 (repeated root)" },
+    "verification": {
+      "method": "substitution",
+      "checks": ["2² − 4(2) + 4 = 0"]
+    },
+    "teachingNotes": ["Connect Δ = 0 to a repeated root"],
+    "commonMistakes": ["Expecting two different roots when Δ = 0"],
+    "difficulty": "beginner",
+    "tags": ["discriminant", "roots"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "exampleId": "geom_pythagoras_3_4_5",
+    "title": "Pythagoras: 3-4-5 triangle",
+    "question": "A right-angled triangle has sides 3 cm and 4 cm. Find the hypotenuse.",
+    "classification": {
+      "problemType": "geometry",
+      "shapeType": "triangle",
+      "isRightTriangle": true
+    },
+    "method": "pythagoras",
+    "reasoningSteps": [
+      {
+        "step": 1,
+        "title": "Name the shape",
+        "description": "Right-angled triangle",
+        "conceptRefs": ["triangle", "pythagoras"]
+      },
+      {
+        "step": 2,
+        "title": "Write the formula",
+        "description": "a² + b² = c²",
+        "calculations": ["c^2 = 3^2 + 4^2"]
+      },
+      {
+        "step": 3,
+        "title": "Calculate",
+        "description": "c = √25 = 5 cm",
+        "calculations": ["c = 5"]
+      }
+    ],
+    "answer": { "hypotenuse": 5, "display": "Hypotenuse = 5 cm" },
+    "verification": {
+      "method": "pythagoras",
+      "checks": ["3² + 4² = 9 + 16 = 25 = 5²"]
+    },
+    "teachingNotes": ["Point to the side opposite the right angle as the hypotenuse"],
+    "commonMistakes": ["Adding 3 + 4 instead of squaring first"],
+    "difficulty": "beginner",
+    "tags": ["pythagoras"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "exampleId": "geom_triangle_area_6_4",
+    "title": "Triangle area: base 6 cm, height 4 cm",
+    "question": "Find the area of a triangle with base 6 cm and height 4 cm.",
+    "classification": {
+      "problemType": "geometry",
+      "shapeType": "triangle"
+    },
+    "method": "triangle_measures",
+    "reasoningSteps": [
+      {
+        "step": 1,
+        "title": "Write the formula",
+        "description": "A = ½bh",
+        "conceptRefs": ["triangle", "area"]
+      },
+      {
+        "step": 2,
+        "title": "Substitute",
+        "description": "A = ½ × 6 × 4 = 12 cm²",
+        "calculations": ["0.5 * 6 * 4 = 12"]
+      }
+    ],
+    "answer": { "area": 12, "display": "Area = 12 cm²" },
+    "verification": {
+      "method": "substitution",
+      "checks": ["(1/2)*6*4 = 12"]
+    },
+    "teachingNotes": ["Remind students that area uses square units"],
+    "commonMistakes": ["Forgetting the ½"],
+    "difficulty": "beginner",
+    "tags": ["triangle", "area"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "exampleId": "geom_circle_r7",
+    "title": "Circle with radius 7 cm",
+    "question": "A circle has radius 7 cm. Find the area.",
+    "classification": {
+      "problemType": "geometry",
+      "shapeType": "circle",
+      "radius": 7
+    },
+    "method": "circle_measures",
+    "reasoningSteps": [
+      {
+        "step": 1,
+        "title": "Choose π",
+        "description": "r is a multiple of 7, so use π = 22/7",
+        "conceptRefs": ["circle"]
+      },
+      {
+        "step": 2,
+        "title": "Substitute",
+        "description": "A = (22/7) × 7² = 154 cm²",
+        "calculations": ["(22/7)*49 = 154"]
+      }
+    ],
+    "answer": { "area": 154, "display": "Area = 154 cm²" },
+    "verification": {
+      "method": "substitution",
+      "checks": ["(22/7)*7*7 = 154"]
+    },
+    "teachingNotes": ["Use 22/7 when r is a multiple of 7"],
+    "commonMistakes": ["Using diameter in place of radius"],
+    "difficulty": "beginner",
+    "tags": ["circle", "area"],
+    "active": true
+  }
+]

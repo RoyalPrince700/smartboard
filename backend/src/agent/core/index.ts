@@ -1,0 +1,10 @@
+export { EducationalAgent, educationalAgent, createPlaceholderResponse } from './agent';
+export { IntentEngine, intentEngine, AGENT_INTENTS } from './intentEngine';
+export type { AgentIntent, IntentResult } from './intentEngine';
+export { createAgentContext, normalizeInput } from './agentContext';
+export type { AgentContext } from './agentContext';
+export { ConversationEngine, conversationEngine } from './conversationEngine';
+export { ReasoningEngine, reasoningEngine } from './reasoningEngine';
+export { TeachingEngine, teachingEngine, TEACHING_MODES } from './teachingEngine';
+export type { TeachingMode } from './teachingEngine';
+export { ResponseBuilder, responseBuilder } from './responseBuilder';

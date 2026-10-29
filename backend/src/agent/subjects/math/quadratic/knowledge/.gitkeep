@@ -1,0 +1,13 @@
+# Knowledge — Quadratic
+
+Educational content for quadratic equations is stored in MongoDB (`agentKnowledge`).
+
+Seed/import files will be added in **Phase 7**. See `MODEL_INSTRUCTIONS.md` for document format.
+
+Planned knowledge types:
+
+- definition (standard form, discriminant, roots)
+- formula (quadratic formula)
+- explanation (beginner / intermediate / advanced)
+- hint (per solving step)
+- misconception (sign errors, coefficient confusion)

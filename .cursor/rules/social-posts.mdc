@@ -1,0 +1,30 @@
+---
+description: Voice, audience objectives, and content strategy for Smart Board social posts
+globs: frontend/src/data/social/**
+alwaysApply: false
+---
+
+# Social posts — voice + objectives + content
+
+**2 complete posts per day.** Never chop one story into 10 fragments.
+
+When creating, editing, or generating content in `frontend/src/data/social/`:
+
+## Primary objectives
+1. **Global hiring & clients** — international audience, founders, hiring managers
+2. **Accessible + technical** — plain language first, depth second
+3. **Build with AI transparency** — Cursor/AI-assisted building + AI in product
+4. **Technical collaboration** — substance for engineers to engage
+
+## Daily format
+- **LinkedIn / WhatsApp**: `series[]` with exactly **2 complete posts** (morning + evening)
+- **Twitter**: `thread[]` with **2 separate tweets** — post independently, not a cliffhanger thread
+- **Facebook / Instagram / TikTok**: rich single `content` (post twice if needed with different media)
+- Each item must read **finished** — no "Part 1, wait for more"
+
+## Voice + content
+- Read `styleGuide.ts` and `contentPlaybook.ts`
+- Explore codebase before writing
+- Attach `media[]` — screen recordings, screenshots
+
+Target: **2 posts per day** for 3 months.

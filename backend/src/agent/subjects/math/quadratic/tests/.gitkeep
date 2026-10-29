@@ -1,0 +1,8 @@
+# Tests — Quadratic
+
+Phase 10 test suites:
+
+- `parser.test.ts` — equation parsing
+- `solver.test.ts` — quadratic formula, factorization
+- `rules.test.ts` — discriminant rules
+- `conversation.test.ts` — multi-turn flows

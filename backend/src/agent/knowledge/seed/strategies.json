@@ -1,0 +1,85 @@
+[
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "strategyId": "prefer_factorization",
+    "priority": 20,
+    "conditions": [{ "field": "factorizable", "operator": "eq", "value": true }],
+    "method": "factorization",
+    "fallback": "quadratic_formula",
+    "description": "Use factorization when integer roots are straightforward",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "strategyId": "default_quadratic_formula",
+    "priority": 10,
+    "conditions": [],
+    "method": "quadratic_formula",
+    "description": "Default to quadratic formula",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "strategyId": "angle_theorems",
+    "priority": 35,
+    "conditions": [{ "field": "find", "operator": "eq", "value": "unknown_angle" }],
+    "method": "angle_theorems",
+    "fallback": "triangle_measures",
+    "description": "Use angle facts for unknown angles in diagrams",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "strategyId": "prefer_pythagoras",
+    "priority": 30,
+    "conditions": [{ "field": "isRightTriangle", "operator": "eq", "value": true }],
+    "method": "pythagoras",
+    "fallback": "triangle_measures",
+    "description": "If the triangle is right-angled, use Pythagoras to find a missing side",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "strategyId": "circle_measures",
+    "priority": 20,
+    "conditions": [{ "field": "shapeType", "operator": "eq", "value": "circle" }],
+    "method": "circle_measures",
+    "description": "Use πr² and 2πr for a circle",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "strategyId": "default_geometry_measures",
+    "priority": 10,
+    "conditions": [],
+    "method": "triangle_measures",
+    "description": "Default to triangle perimeter and area when the shape is not specialised",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "linear",
+    "strategyId": "collect_variable_terms",
+    "priority": 20,
+    "conditions": [{ "field": "hasVariableOnBothSides", "operator": "eq", "value": true }],
+    "method": "default",
+    "description": "When the variable is on both sides, collect all variable terms on one side first",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "linear",
+    "strategyId": "default_isolate_variable",
+    "priority": 10,
+    "conditions": [],
+    "method": "default",
+    "description": "Default: isolate the variable using inverse operations on both sides",
+    "active": true
+  }
+]

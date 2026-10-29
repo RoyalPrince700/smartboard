@@ -1,0 +1,65 @@
+export interface RecognitionConfig {
+  minPointsCircle: number;
+  minPointsArc: number;
+  minPointsLine: number;
+  minPointsTriangle: number;
+  minLineLength: number;
+  minTriangleSize: number;
+  lineMaxDeviationRatio: number;
+  circleMaxClosureRatio: number;
+  circleMinCoverageRadians: number;
+  circleMaxRadialErrorRatio: number;
+  arcMinClosureRatio: number;
+  arcMaxRadialErrorRatio: number;
+  arcMinSpanRadians: number;
+  arcMaxSpanRadians: number;
+  semicircleSpanToleranceRad: number;
+  semicircleMinChordRatio: number;
+  minCircleConfidence: number;
+  minArcConfidence: number;
+  minSemicircleConfidence: number;
+  minLineConfidence: number;
+  minTriangleConfidence: number;
+  minClassificationConfidence: number;
+  triangleClosureRatio: number;
+  triangleMinAreaRatio: number;
+  equilateralSideTolerance: number;
+  isoscelesSideTolerance: number;
+  rightAngleToleranceDeg: number;
+  strongAngleSnapToleranceDeg: number;
+  weakAngleSnapToleranceDeg: number;
+  minCircleRadius: number;
+}
+
+export const DEFAULT_RECOGNITION_CONFIG: RecognitionConfig = {
+  minPointsCircle: 12,
+  minPointsArc: 8,
+  minPointsLine: 2,
+  minPointsTriangle: 10,
+  minLineLength: 15,
+  minTriangleSize: 36,
+  lineMaxDeviationRatio: 0.14,
+  circleMaxClosureRatio: 0.35,
+  circleMinCoverageRadians: 4.2,
+  circleMaxRadialErrorRatio: 0.09,
+  arcMinClosureRatio: 0.12,
+  arcMaxRadialErrorRatio: 0.12,
+  arcMinSpanRadians: 0.35,
+  arcMaxSpanRadians: 5.6,
+  semicircleSpanToleranceRad: 0.5,
+  semicircleMinChordRatio: 0.72,
+  minCircleConfidence: 0.58,
+  minArcConfidence: 0.55,
+  minSemicircleConfidence: 0.58,
+  minLineConfidence: 0.52,
+  minTriangleConfidence: 0.56,
+  minClassificationConfidence: 0.5,
+  triangleClosureRatio: 0.18,
+  triangleMinAreaRatio: 0.08,
+  equilateralSideTolerance: 0.14,
+  isoscelesSideTolerance: 0.14,
+  rightAngleToleranceDeg: 14,
+  strongAngleSnapToleranceDeg: 6,
+  weakAngleSnapToleranceDeg: 12,
+  minCircleRadius: 12,
+};

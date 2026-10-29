@@ -1,0 +1,161 @@
+[
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "label": "Quadratic Equations",
+    "description": "Solving equations of the form ax² + bx + c = 0",
+    "subtopics": [
+      "standard_form",
+      "coefficients",
+      "discriminant",
+      "factorization",
+      "quadratic_formula",
+      "completing_the_square",
+      "roots"
+    ],
+    "prerequisites": ["linear"],
+    "supportedIntents": [
+      "START_PROBLEM",
+      "CONTINUE",
+      "ASK_EXPLANATION",
+      "ASK_WHY",
+      "ASK_DEFINITION",
+      "REQUEST_HINT",
+      "REQUEST_SIMPLER_EXPLANATION",
+      "CHECK_ANSWER",
+      "SUBMIT_ANSWER",
+      "ASK_ALTERNATIVE_METHOD",
+      "REQUEST_EXAMPLE",
+      "REQUEST_PRACTICE"
+    ],
+      "supportedMethods": ["factorization", "quadratic_formula", "completing_the_square"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "linear",
+    "label": "Linear Equations",
+    "description": "Solving equations of the form ax + b = c",
+    "subtopics": ["one_step", "two_step", "variables_both_sides"],
+    "prerequisites": [],
+    "supportedIntents": [
+      "START_PROBLEM",
+      "CONTINUE",
+      "ASK_EXPLANATION",
+      "ASK_WHY",
+      "REQUEST_HINT",
+      "CHECK_ANSWER",
+      "SUBMIT_ANSWER"
+    ],
+    "supportedMethods": ["isolate_variable", "collect_terms"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "exponential",
+    "label": "Exponential Equations",
+    "description": "Solving equations where the variable is in the exponent, e.g. 2^x = 16",
+    "subtopics": ["same_base", "logarithm", "compound_exponent"],
+    "prerequisites": ["linear"],
+    "supportedIntents": ["START_PROBLEM", "CONTINUE", "ASK_EXPLANATION", "REQUEST_HINT", "CHECK_ANSWER"],
+    "supportedMethods": ["equate_exponents", "logarithm"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "absolute_value",
+    "label": "Absolute Value Equations",
+    "description": "Solving equations with |...|, split into two cases",
+    "subtopics": ["split_cases", "linear_inside"],
+    "prerequisites": ["linear"],
+    "supportedIntents": ["START_PROBLEM", "CONTINUE", "ASK_EXPLANATION", "REQUEST_HINT", "CHECK_ANSWER"],
+    "supportedMethods": ["split_cases"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "simultaneous",
+    "label": "Simultaneous Equations",
+    "description": "Solving two linear equations with two unknowns",
+    "subtopics": ["elimination", "substitution", "two_variables"],
+    "prerequisites": ["linear"],
+    "supportedIntents": ["START_PROBLEM", "CONTINUE", "ASK_EXPLANATION", "REQUEST_HINT", "CHECK_ANSWER"],
+    "supportedMethods": ["elimination", "substitution"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "arithmetic",
+    "label": "Arithmetic",
+    "description": "Evaluating numeric expressions using order of operations",
+    "subtopics": ["order_of_operations", "fractions", "verification"],
+    "prerequisites": [],
+    "supportedIntents": ["START_PROBLEM", "CONTINUE", "CHECK_ANSWER"],
+    "supportedMethods": ["evaluate"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "label": "Plane Geometry",
+    "description": "Area, perimeter, and Pythagoras for triangles, rectangles, squares, and circles",
+    "subtopics": [
+      "plane_shapes",
+      "triangle",
+      "pythagoras",
+      "rectangle",
+      "square",
+      "circle",
+      "area",
+      "perimeter",
+      "angle_theorems"
+    ],
+    "prerequisites": [],
+    "supportedIntents": [
+      "START_PROBLEM",
+      "CONTINUE",
+      "ASK_EXPLANATION",
+      "ASK_WHY",
+      "ASK_DEFINITION",
+      "REQUEST_HINT",
+      "REQUEST_SIMPLER_EXPLANATION",
+      "CHECK_ANSWER",
+      "SUBMIT_ANSWER",
+      "ASK_ALTERNATIVE_METHOD",
+      "REQUEST_EXAMPLE",
+      "REQUEST_PRACTICE"
+    ],
+    "supportedMethods": ["angle_theorems", "pythagoras", "triangle_measures", "rectangle_measures", "circle_measures"],
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "trigonometry",
+    "label": "Trigonometry",
+    "description": "Sine, cosine, tangent, common angle values, and simple unknown-angle questions",
+    "subtopics": [
+      "sine",
+      "cosine",
+      "tangent",
+      "common_angles",
+      "unknown_angles"
+    ],
+    "prerequisites": ["geometry"],
+    "supportedIntents": [
+      "START_PROBLEM",
+      "CONTINUE",
+      "ASK_EXPLANATION",
+      "ASK_WHY",
+      "ASK_DEFINITION",
+      "REQUEST_HINT",
+      "REQUEST_SIMPLER_EXPLANATION",
+      "CHECK_ANSWER",
+      "SUBMIT_ANSWER",
+      "ASK_ALTERNATIVE_METHOD",
+      "REQUEST_EXAMPLE",
+      "REQUEST_PRACTICE"
+    ],
+    "supportedMethods": ["known_angle_table", "inverse_trig_common_angle"],
+    "active": true
+  }
+]

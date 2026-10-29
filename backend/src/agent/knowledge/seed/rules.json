@@ -1,0 +1,290 @@
+[
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "ruleId": "quadratic_degree_2",
+    "priority": 100,
+    "conditions": [{ "field": "degree", "operator": "eq", "value": 2 }],
+    "actions": [{ "type": "set", "field": "problemType", "value": "quadratic" }],
+    "description": "IF equation degree = 2 THEN problem type = quadratic",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "ruleId": "quadratic_jss_step_breakdown",
+    "priority": 95,
+    "conditions": [{ "field": "degree", "operator": "eq", "value": 2 }],
+    "actions": [
+      { "type": "set", "field": "solutionBreakdown", "value": "jss_step_by_step" },
+      {
+        "type": "set",
+        "field": "breakdownSequence",
+        "value": [
+          "standard_form",
+          "identify_coefficients",
+          "write_formula",
+          "substitute_values",
+          "square_b",
+          "multiply_4ac",
+          "combine_signs",
+          "interpret_discriminant",
+          "apply_quadratic_formula",
+          "split_plus_minus_roots"
+        ]
+      }
+    ],
+    "description": "For JSS-friendly quadratic teaching, break every solve into small visible algebra moves before showing the final roots.",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "ruleId": "discriminant_positive",
+    "priority": 90,
+    "conditions": [{ "field": "discriminant", "operator": "gt", "value": 0 }],
+    "actions": [
+      { "type": "set", "field": "rootCount", "value": 2 },
+      { "type": "set", "field": "rootType", "value": "real_distinct" }
+    ],
+    "description": "IF discriminant > 0 THEN two real roots",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "ruleId": "discriminant_zero",
+    "priority": 90,
+    "conditions": [{ "field": "discriminant", "operator": "eq", "value": 0 }],
+    "actions": [
+      { "type": "set", "field": "rootCount", "value": 1 },
+      { "type": "set", "field": "rootType", "value": "real_repeated" }
+    ],
+    "description": "IF discriminant = 0 THEN one repeated real root",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "quadratic",
+    "ruleId": "discriminant_negative",
+    "priority": 90,
+    "conditions": [{ "field": "discriminant", "operator": "lt", "value": 0 }],
+    "actions": [
+      { "type": "set", "field": "rootCount", "value": 0 },
+      { "type": "set", "field": "rootType", "value": "complex" }
+    ],
+    "description": "IF discriminant < 0 THEN complex roots",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "geometry_shape_detected",
+    "priority": 100,
+    "conditions": [
+      { "field": "shapeType", "operator": "in", "value": ["triangle", "rectangle", "square", "circle"] }
+    ],
+    "actions": [{ "type": "set", "field": "problemType", "value": "geometry" }],
+    "description": "IF a plane shape is recognised THEN problem type = geometry",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "geometry_jss_step_breakdown",
+    "priority": 95,
+    "conditions": [{ "field": "problemType", "operator": "eq", "value": "geometry" }],
+    "actions": [
+      { "type": "set", "field": "solutionBreakdown", "value": "jss_step_by_step" },
+      {
+        "type": "set",
+        "field": "breakdownSequence",
+        "value": [
+          "identify_shape",
+          "list_givens",
+          "choose_formula",
+          "substitute_values",
+          "calculate",
+          "state_answer"
+        ]
+      }
+    ],
+    "description": "For JSS-friendly geometry teaching, name the shape, list the given lengths, write the formula, then substitute before stating the answer.",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "right_triangle_pythagoras",
+    "priority": 90,
+    "conditions": [{ "field": "isRightTriangle", "operator": "eq", "value": true }],
+    "actions": [
+      { "type": "set", "field": "triangleType", "value": "right_angled" },
+      { "type": "set", "field": "preferredMethod", "value": "pythagoras" }
+    ],
+    "description": "IF the triangle is right-angled THEN use Pythagoras a² + b² = c²",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "angle_diagram_unknown_angle",
+    "priority": 88,
+    "conditions": [{ "field": "find", "operator": "eq", "value": "unknown_angle" }],
+    "actions": [
+      { "type": "set", "field": "problemType", "value": "geometry" },
+      { "type": "set", "field": "preferredMethod", "value": "angle_theorems" }
+    ],
+    "description": "IF the diagram asks for an unknown angle THEN use angle facts and theorem rules",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "isosceles_angle_sum",
+    "priority": 87,
+    "conditions": [{ "field": "equalLengthPairs", "operator": "gt", "value": 0 }],
+    "actions": [
+      { "type": "set", "field": "triangleType", "value": "isosceles" },
+      { "type": "set", "field": "preferredMethod", "value": "isosceles_triangle_angle_sum" }
+    ],
+    "description": "IF two sides are equal THEN base angles are equal and triangle angles sum to 180°",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "rectangle_area_perimeter",
+    "priority": 85,
+    "conditions": [{ "field": "shapeType", "operator": "eq", "value": "rectangle" }],
+    "actions": [{ "type": "set", "field": "measures", "value": "area_and_perimeter" }],
+    "description": "IF the shape is a rectangle THEN Area = l × w and Perimeter = 2(l + w)",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "geometry",
+    "ruleId": "circle_pi_measures",
+    "priority": 85,
+    "conditions": [{ "field": "shapeType", "operator": "eq", "value": "circle" }],
+    "actions": [{ "type": "set", "field": "measures", "value": "area_and_circumference" }],
+    "description": "IF the shape is a circle THEN Area = πr² and Circumference = 2πr",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "trigonometry",
+    "ruleId": "trig_function_detected",
+    "priority": 100,
+    "conditions": [{ "field": "problemType", "operator": "eq", "value": "trigonometry" }],
+    "actions": [{ "type": "set", "field": "topic", "value": "trigonometry" }],
+    "description": "IF a trigonometric function is present THEN use trigonometry rules.",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "trigonometry",
+    "ruleId": "trig_known_angle_value",
+    "priority": 90,
+    "conditions": [{ "field": "trigTask", "operator": "eq", "value": "evaluate_known_angle" }],
+    "actions": [{ "type": "set", "field": "method", "value": "known_angle_table" }],
+    "description": "IF the trig question uses a common angle THEN use the known-angle table.",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "trigonometry",
+    "ruleId": "trig_unknown_angle",
+    "priority": 80,
+    "conditions": [{ "field": "trigTask", "operator": "eq", "value": "find_angle" }],
+    "actions": [{ "type": "set", "field": "method", "value": "inverse_trig_common_angle" }],
+    "description": "IF the angle is unknown THEN use inverse trig with common angle values.",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "linear",
+    "ruleId": "linear_degree_1",
+    "priority": 100,
+    "conditions": [{ "field": "degree", "operator": "eq", "value": 1 }],
+    "actions": [{ "type": "set", "field": "problemType", "value": "linear" }],
+    "description": "IF equation degree = 1 THEN problem type = linear",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "linear",
+    "ruleId": "linear_jss_step_breakdown",
+    "priority": 95,
+    "conditions": [{ "field": "degree", "operator": "eq", "value": 1 }],
+    "actions": [
+      { "type": "set", "field": "solutionBreakdown", "value": "jss_step_by_step" },
+      {
+        "type": "set",
+        "field": "breakdownSequence",
+        "value": [
+          "identify_equation",
+          "collect_variable_terms",
+          "move_constants",
+          "isolate_variable",
+          "state_answer"
+        ]
+      }
+    ],
+    "description": "For JSS-friendly linear teaching, identify the equation, collect terms, move constants, then isolate the variable.",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "linear",
+    "ruleId": "linear_variables_both_sides",
+    "priority": 92,
+    "conditions": [{ "field": "equationType", "operator": "eq", "value": "variables_both_sides" }],
+    "actions": [
+      { "type": "set", "field": "linearMethod", "value": "collect_terms" },
+      { "type": "set", "field": "hasVariableOnBothSides", "value": true }
+    ],
+    "description": "IF the variable appears on both sides THEN collect variable terms first",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "exponential",
+    "ruleId": "exponential_detected",
+    "priority": 100,
+    "conditions": [{ "field": "problemType", "operator": "eq", "value": "exponential" }],
+    "actions": [{ "type": "set", "field": "topic", "value": "exponential" }],
+    "description": "IF the variable is in the exponent THEN use exponential equation rules",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "absolute_value",
+    "ruleId": "absolute_value_detected",
+    "priority": 100,
+    "conditions": [{ "field": "problemType", "operator": "eq", "value": "absolute_value" }],
+    "actions": [{ "type": "set", "field": "topic", "value": "absolute_value" }],
+    "description": "IF the equation contains |...| THEN use absolute value rules",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "simultaneous",
+    "ruleId": "simultaneous_detected",
+    "priority": 100,
+    "conditions": [{ "field": "problemType", "operator": "eq", "value": "simultaneous" }],
+    "actions": [{ "type": "set", "field": "topic", "value": "simultaneous" }],
+    "description": "IF two or more equations share variables THEN use simultaneous equation rules",
+    "active": true
+  },
+  {
+    "subject": "math",
+    "topic": "arithmetic",
+    "ruleId": "arithmetic_detected",
+    "priority": 100,
+    "conditions": [{ "field": "problemType", "operator": "eq", "value": "arithmetic" }],
+    "actions": [{ "type": "set", "field": "topic", "value": "arithmetic" }],
+    "description": "IF the input is a numeric expression THEN evaluate using order of operations",
+    "active": true
+  }
+]
