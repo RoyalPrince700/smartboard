@@ -36,6 +36,21 @@ npm run dev
 
 Runs at `http://localhost:5173`
 
+### Render deployment
+
+The backend requires a MongoDB connection in production. When deploying with
+`render.yaml`, Render will prompt for `MONGODB_URI`; paste the MongoDB Atlas
+connection string there as a Render secret. Do not commit it to the repository.
+
+After deployment, verify the service before using the frontend:
+
+```bash
+curl https://<your-render-service>.onrender.com/api/health
+```
+
+It must return HTTP `200` and `"db":"connected"`. A `503` response means the
+service could not connect to MongoDB.
+
 ## Phase 1 Features
 
 - Full-screen interactive whiteboard

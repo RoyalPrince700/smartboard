@@ -4,16 +4,15 @@ import { env } from './config/env';
 import { registerAgentModels } from './agent/registerModels';
 
 async function start() {
-  try {
-    await connectDB();
-    await registerAgentModels();
-  } catch {
-    console.warn('Starting without MongoDB — board persistence will fail until DB is available');
-  }
+  await connectDB();
+  await registerAgentModels();
 
   app.listen(env.port, () => {
     console.log(`Server running on http://localhost:${env.port}`);
   });
 }
 
-start();
+start().catch((error: unknown) => {
+  console.error('Unable to start server because MongoDB is unavailable:', error);
+  process.exit(1);
+});
